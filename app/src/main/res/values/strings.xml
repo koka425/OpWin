@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">OpWin</string>
+
+    <!-- Strings related to registrar user(register) -->
+    <string name="nameR">Nombre Completo</string>
+    <string name="mailR">Correo Electronico</string>
+    <string name="contraR">Contraseña</string>
+    <string name="contra2R">Confirmar Contraseña</string>
+    <string name="buttonRC">Registrar Cuenta</string>
+    <string name="buttonC">Cancelar</string>
+
+    <!-- Strings related to perfil -->
+    <string name="nameP">Javier Martinez Enciso</string>
+    <string name="cellphoneP">722-350-1229</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">OpWin</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="action_register">Register</string>
+    <string name="facebook_app_id">1936501706590766</string>
+    <string name="large_text">
+        "Television Rota.\n\n"
+
+        "Descripcion breve:\n"
+        "La paga es a tratar, mientras que el trabajo se encontrara finalizado cuando la television llegue a un diagnostico "
+        "ya sea el ser reparada o que se llegue a tener una explicacion de porque ya no funciona.\n"
+        "El horario es de 8AM-2PM. \n"
+
+    </string>
+
+    <string name="large_text2">
+        "Javo.\n\n"
+        "Este trabajo consiste en reparar una television, la cual se encuentra dañada desde"
+        "hace poco tiempo, la causa fue un golpe, y ya no enciende, entonces para hacerlo corto "
+        "se busca su reparacion para que vuelva a funcionar "
+    </string>
+    <string name="mailP">javogx@hotmail.com</string>
+    <string name="jobRequestP">250</string>
+    <string name="reviewsP">300</string>
+    <string name="jobsActiveP">500</string>
+    <string name="descriptionP">Description</string>
+    <string name="contentDescriptionP">Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño</string>
+    <string name="imageP">Image</string>
+    <string name="labelJobsActiveP">Jobs Active</string>
+    <string name="labelJobsRequestP">Jobs Request</string>
+    <string name="labelReviewsP">Reviews</string>
+    <string name="imageoptionItem">imageOption</string>
+
+    <string name="telefonoP">Reviews</string>
+    <string name="descripcionP">Reviews</string>
+    <string name="fotoP">Reviews</string>
+    <string name="jobsActiveConfig">Reviews</string>
+    <string name="jobsRequestsConfig">Reviews</string>
+
+</resources>
