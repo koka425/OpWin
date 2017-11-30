@@ -59,56 +59,63 @@ tools:context="com.example.javog.sesion.ConfigurarPerfil">
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="139dp" />
 
-<EditText
-    android:id="@+id/editFotoConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/fotoP"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-<EditText
-    android:id="@+id/editReviewsConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/reviewsP"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+        <Button
+            android:id="@+id/btnTomarFoto"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:hint="@string/buttonTF"
+            android:text="@string/buttonTF"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp" />
 
-<EditText
-    android:id="@+id/editJobsRequestConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/jobsRequestsConfig"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+        <Button
+            android:id="@+id/btnGaleria"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="169dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="0.09"
+            android:background="@color/colorPrimary"
+            android:hint="@string/buttonG"
+            android:text="@string/buttonG"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp" />
 
-<EditText
-    android:id="@+id/editJobsActiveConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/jobsActiveConfig"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+    </LinearLayout>
 
-<Button
-    android:id="@+id/btnRegister"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/buttonRC" />
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@color/colorTry1"
+        android:text="@string/buttonRC"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="18sp" />
 
-<Button
-    android:id="@+id/btnCancelar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/buttonC" />
+    <Button
+        android:id="@+id/btnCancelarChange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@color/colorTry1"
+        android:text="@string/buttonC"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="18sp" />
 
 </LinearLayout>

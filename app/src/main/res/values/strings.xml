@@ -8,6 +8,8 @@
     <string name="contra2R">Confirmar Contraseña</string>
     <string name="buttonRC">Registrar Cuenta</string>
     <string name="buttonC">Cancelar</string>
+    <string name="buttonTF">Tomar Foto</string>
+    <string name="buttonG">Sacar de Galeria</string>
 
     <!-- Strings related to perfil -->
     <string name="nameP">Javier Martinez Enciso</string>
@@ -58,8 +60,8 @@
     <string name="labelReviewsP">Reviews</string>
     <string name="imageoptionItem">imageOption</string>
 
-    <string name="telefonoP">Reviews</string>
-    <string name="descripcionP">Reviews</string>
+    <string name="telefonoP">Telefono</string>
+    <string name="descripcionP">Descripcion del perfil</string>
     <string name="fotoP">Reviews</string>
     <string name="jobsActiveConfig">Reviews</string>
     <string name="jobsRequestsConfig">Reviews</string>

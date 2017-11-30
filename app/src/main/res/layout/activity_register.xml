@@ -53,12 +53,22 @@
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/buttonRC" />
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@color/colorTry1"
+        android:text="@string/buttonRC"
+        android:textColor="@color/cardview_light_background" />
 
     <Button
         android:id="@+id/btnCancelar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/buttonC" />
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@color/colorTry1"
+        android:text="@string/buttonC"
+        android:textColor="@color/cardview_light_background" />
 
 </LinearLayout>

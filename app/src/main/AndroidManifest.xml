@@ -34,10 +34,14 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".ConfigurarPerfil" />
+        <activity android:name=".Perfil" />
         <activity
             android:name=".OfertasTrabajos"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ConfigurarPerfil"></activity>
+
+
+
     </application>
 
 </manifest>

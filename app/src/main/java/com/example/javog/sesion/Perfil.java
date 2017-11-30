@@ -7,14 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Perfil.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Perfil#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Perfil extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

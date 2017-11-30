@@ -67,7 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/colorTry1"
                 android:text="@string/action_sign_in"
+                android:textColor="@color/cardview_light_background"
                 android:textStyle="bold" />
 
             <Button
@@ -76,7 +78,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/colorTry1"
                 android:text="@string/action_register"
+                android:textColor="@color/cardview_light_background"
                 android:textStyle="bold" />
 
         </LinearLayout>
