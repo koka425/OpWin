@@ -61,6 +61,12 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <CheckBox
+                android:id="@+id/checkBoxSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recordarme" />
+
             <Button
                 android:id="@+id/btnLog"
                 style="?android:textAppearanceSmall"
