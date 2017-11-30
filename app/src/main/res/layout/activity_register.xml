@@ -30,6 +30,16 @@
         tools:layout_editor_absoluteY="45dp" />
 
     <EditText
+        android:id="@+id/editCel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Telefono"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="45dp" />
+
+    <EditText
         android:id="@+id/editContra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +58,16 @@
         android:hint="@string/contra2R"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="139dp" />
+
+    <EditText
+        android:id="@+id/editDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Descripcion"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="45dp" />
 
     <Button
         android:id="@+id/btnRegister"
