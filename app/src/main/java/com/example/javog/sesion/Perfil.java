@@ -1,10 +1,18 @@
 package com.example.javog.sesion;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class Perfil extends Fragment {
@@ -46,6 +54,7 @@ public class Perfil extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -53,6 +62,59 @@ public class Perfil extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_perfil, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view,
+                              Bundle savedInstanceState){
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabLogOut);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Click", Toast.LENGTH_SHORT).show();
+                AskOption(view).show();
+            }
+        });
+    }
+
+    private AlertDialog AskOption(final View view)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                //set message, title, and icon
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿En verdad desea cerrar su sesión?")
+                .setIcon(R.drawable.com_facebook_close)
+
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        LogOut(view);
+                    }
+
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
+    private void LogOut(View view){
+        SharedPreferences config = view.getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_CONS, Context.MODE_PRIVATE);
+        if(config.getBoolean(LoginActivity.LOGIN_SAVED, false)){
+            SharedPreferences.Editor editor = config.edit();
+            editor.putBoolean(LoginActivity.LOGIN_SAVED, false);
+            editor.putString(LoginActivity.LOGIN_KEY, null);
+            editor.putString(LoginActivity.LOGIN_PASS, null);
+            editor.commit();
+        }
+        Intent login = new Intent(getActivity(), LoginActivity.class);
+        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(login);
     }
 
 }
