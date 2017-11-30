@@ -3,7 +3,7 @@
     package="com.example.javog.sesion">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -30,9 +33,11 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".OfertasTrabajos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity
+            android:name=".OfertasTrabajos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ConfigurarPerfil"></activity>
     </application>
 
 </manifest>

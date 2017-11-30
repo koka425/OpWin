@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Lets change your profile", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MainActivity.this, ConfigurarDatosPerfil.class);
+                Intent intent = new Intent(MainActivity.this, ConfigurarPerfil.class);
                 startActivity(intent);
             }
         });
@@ -165,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "General";
+                    return "Anuncios";
                 case 1:
                     return "Trabajos";
                 case 2:
-                    return "Servicios";
+                    return "Buscar";
                 case 3:
                     return "Perfil";
             }
