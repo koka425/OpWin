@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.javog.sesion.crypto.MessageCrypto;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -29,7 +31,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-
+    private MessageCrypto mc;
 
     // UI references.
 
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        mc = new MessageCrypto();
         mEmailView = (EditText) findViewById(R.id.userEmail);
         mPasswordView = (EditText) findViewById(R.id.userPassword);
 
@@ -53,9 +56,11 @@ public class LoginActivity extends AppCompatActivity{
                 String Email = mEmailView.getText().toString();
                 String Pwd = mPasswordView.getText().toString();
                 if(Email.equalsIgnoreCase("javo") && Pwd.equals("javo")){
+                    //String hash = mc.GenerateHash(Pwd, MessageCrypto.HASH_SHA256);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, hash, Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
                 }
