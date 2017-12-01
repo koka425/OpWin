@@ -39,25 +39,25 @@ tools:context="com.example.javog.sesion.ConfigurarPerfil">
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="96dp" />
 
-<EditText
-    android:id="@+id/editTelefonoConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/telefonoP"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+    <EditText
+        android:id="@+id/editTelefonoConfigurar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/telefonoP"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="139dp" />
 
-<EditText
-    android:id="@+id/editDescripcionConfigurar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPassword"
-    android:hint="@string/descripcionP"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="139dp" />
+    <EditText
+        android:id="@+id/editDescripcionConfigurar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/descripcionP"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="139dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,12 +95,12 @@ tools:context="com.example.javog.sesion.ConfigurarPerfil">
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnModify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorTry1"
         android:text="@string/buttonRC"
         android:textColor="@color/cardview_light_background"
