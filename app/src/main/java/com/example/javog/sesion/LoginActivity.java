@@ -2,8 +2,10 @@ package com.example.javog.sesion;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -11,13 +13,22 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Datos.User;
 import com.example.javog.sesion.crypto.MessageCrypto;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity{
-
+    private MobileServiceClient mClient;
+    private MobileServiceTable<User> tabla;
+    private ArrayList<User> items;
+    private boolean encontrado=false;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -50,11 +61,16 @@ public class LoginActivity extends AppCompatActivity{
     private View mLoginFormView;
     private CheckBox checkBoxSave;
 
+    private boolean bSalvar = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Azure
+        initAzureClient();
+        items = new ArrayList<User>();
         // Set up the login form.
         mc = new MessageCrypto();
         mEmailView = (EditText) findViewById(R.id.userEmail);
@@ -69,6 +85,7 @@ public class LoginActivity extends AppCompatActivity{
                 if(ValidateFields()){
                     String Email = mEmailView.getText().toString();
                     String Pwd = mPasswordView.getText().toString();
+                    bSalvar = checkBoxSave.isChecked();
                     doLogin(Email, Pwd);
                 } else {
                     Toast.makeText(LoginActivity.this, "Favor de llenar todos los campos", Toast.LENGTH_SHORT).show();
@@ -96,20 +113,12 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void doLogin(String Email, String Pwd){
-        if(Email.equalsIgnoreCase("javo") && Pwd.equals("javo")){
-            //String hash = mc.GenerateHash(Pwd, MessageCrypto.HASH_SHA256);
-
-            if (checkBoxSave.isChecked()) {
+        String hash = mc.GenerateHash(Pwd, MessageCrypto.HASH_SHA256);
+        obtenerItemsWhere(Email,hash, Pwd);
+            /*if (checkBoxSave.isChecked()) {
                 SaveCredentials(Email,Pwd);
-            }
+            }*/
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(LoginActivity.this, hash, Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void SaveCredentials(String Email, String Pwd){
@@ -133,6 +142,76 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
+    private void initAzureClient(){
+        try{
+            mClient = new MobileServiceClient("https://aadsdewf.azurewebsites.net", this);
+            Log.d("initAzureClient",  "cliente de Azure inicializado");
+        }catch (MalformedURLException mue){
+            Log.d("initClientAzure", mue.getMessage());
+        }
+        tabla = mClient.getTable(User.class);
+    }
 
+    private void obtenerItemsWhere(final String email, final String password, final String Pwd) {
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... voids){
+                try {
+                    items.clear();
+                    encontrado = false;
+                    ArrayList<User> res  = tabla
+                            .where()
+                            .field("email")
+                            .eq(email)
+                            .and()
+                            .field("password")
+                            .eq(password)
+                            .execute()
+                            .get();
+
+                    for (User item : res) {
+                        encontrado = true;
+                        Log.d("george", "encontrado dentro el for: "+ String.valueOf(encontrado));
+                        Log.d("george", item.getName());
+                        items.add(item);
+                    }
+                    if (encontrado==true){
+                        if(bSalvar){
+                            SaveCredentials(email, Pwd);
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        //Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //Toast.makeText(LoginActivity.this, "Username or password are incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.d("george", e.getMessage());
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ordenar();
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                ImprimirStatus(encontrado);
+            }
+        }.execute();
+    }
+
+    private void ImprimirStatus(boolean correcto){
+        if (correcto){
+            Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(LoginActivity.this, "Username or password are incorrect", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
