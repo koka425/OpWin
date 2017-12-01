@@ -54,7 +54,6 @@ public class Perfil extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -100,7 +99,6 @@ public class Perfil extends Fragment {
                 })
                 .create();
         return myQuittingDialogBox;
-
     }
 
     private void LogOut(View view){
@@ -112,9 +110,18 @@ public class Perfil extends Fragment {
             editor.putString(LoginActivity.LOGIN_PASS, null);
             editor.commit();
         }
+
+        SharedPreferences session = view.getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = session.edit();
+        editor.putString(LoginActivity.LOGIN_ID, null);
+        editor.putString(LoginActivity.LOGIN_EMAIL, null);
+        editor.putString(LoginActivity.LOGIN_NAME, null);
+        editor.putString(LoginActivity.LOGIN_DESCRIPTION, null);
+        editor.putString(LoginActivity.LOGIN_PHONE, null);
+        editor.commit();
+
         Intent login = new Intent(getActivity(), LoginActivity.class);
         login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(login);
     }
-
 }

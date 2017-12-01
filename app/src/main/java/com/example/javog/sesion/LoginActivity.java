@@ -1,7 +1,10 @@
 package com.example.javog.sesion;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,12 +38,19 @@ public class LoginActivity extends AppCompatActivity{
     private static final int REQUEST_READ_CONTACTS = 0;
 
     public static final String SHARED_PREFS_CONS = "OpWin_Conf";
-
     public static final String LOGIN_KEY = "OpWin_Login";
-
     public static final String LOGIN_PASS = "OpWin_Pass";
-
     public static final String LOGIN_SAVED = "OpWin_Save";
+
+    public static final String SHARED_PREFS_SESSION = "OpWin_Session";
+    public static final String LOGIN_ID = "OpWin_Id";
+    public static final String LOGIN_EMAIL = "OpWin_Email";
+    public static final String LOGIN_PASSWORD = "OpWin_Password";
+    public static final String LOGIN_NAME = "OpWin_Name";
+    public static final String LOGIN_DESCRIPTION = "OpWin_Description";
+    public static final String LOGIN_PHONE = "OpWin_Phone";
+
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -82,14 +92,14 @@ public class LoginActivity extends AppCompatActivity{
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ValidateFields()){
-                    String Email = mEmailView.getText().toString();
-                    String Pwd = mPasswordView.getText().toString();
-                    bSalvar = checkBoxSave.isChecked();
-                    doLogin(Email, Pwd);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Favor de llenar todos los campos", Toast.LENGTH_SHORT).show();
-                }
+                    if (ValidateFields()) {
+                        String Email = mEmailView.getText().toString();
+                        String Pwd = mPasswordView.getText().toString();
+                        bSalvar = checkBoxSave.isChecked();
+                        doLogin(Email, Pwd);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Favor de llenar todos los campos", Toast.LENGTH_SHORT).show();
+                    }
             }
         });
 
@@ -113,12 +123,15 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void doLogin(String Email, String Pwd){
-        String hash = mc.GenerateHash(Pwd, MessageCrypto.HASH_SHA256);
-        obtenerItemsWhere(Email,hash, Pwd);
+        if (TestConection(LoginActivity.this)) {
+            String hash = mc.GenerateHash(Pwd, MessageCrypto.HASH_SHA256);
+            obtenerItemsWhere(Email, hash, Pwd);
             /*if (checkBoxSave.isChecked()) {
                 SaveCredentials(Email,Pwd);
             }*/
-
+        } else {
+            Toast.makeText(LoginActivity.this, "No hay conexion a Internet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void SaveCredentials(String Email, String Pwd){
@@ -127,6 +140,18 @@ public class LoginActivity extends AppCompatActivity{
         editor.putString(LOGIN_KEY, Email);
         editor.putString(LOGIN_PASS, Pwd);
         editor.putBoolean(LOGIN_SAVED, true);
+        editor.commit();
+    }
+
+    private void SalvarSession(String Id, String email, String password, String name, String desc, int phone){
+        SharedPreferences settings = getSharedPreferences(SHARED_PREFS_SESSION, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(LOGIN_ID, Id);
+        editor.putString(LOGIN_EMAIL, email);
+        editor.putString(LOGIN_PASSWORD, password);
+        editor.putString(LOGIN_NAME, name);
+        editor.putString(LOGIN_DESCRIPTION, desc);
+        editor.putString(LOGIN_PHONE, String.valueOf(phone));
         editor.commit();
     }
 
@@ -157,6 +182,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             protected Void doInBackground(Void... voids){
                 try {
+                    String id="";
                     items.clear();
                     encontrado = false;
                     ArrayList<User> res  = tabla
@@ -171,9 +197,12 @@ public class LoginActivity extends AppCompatActivity{
 
                     for (User item : res) {
                         encontrado = true;
-                        Log.d("george", "encontrado dentro el for: "+ String.valueOf(encontrado));
-                        Log.d("george", item.getName());
+                        id = item.getId();
+                        String name = item.getName();
+                        String desc = item.getDecription();
+                        int phone = item.getPhone();
                         items.add(item);
+                        SalvarSession(id, email, Pwd, name, desc, phone);
                     }
                     if (encontrado==true){
                         if(bSalvar){
@@ -181,9 +210,6 @@ public class LoginActivity extends AppCompatActivity{
                         }
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        //Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //Toast.makeText(LoginActivity.this, "Username or password are incorrect", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     Log.d("george", e.getMessage());
@@ -212,6 +238,22 @@ public class LoginActivity extends AppCompatActivity{
         } else {
             Toast.makeText(LoginActivity.this, "Username or password are incorrect", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static boolean TestConection(Context context) {
+        boolean connected = false;
+        ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Recupera todas las redes (tanto móviles como wifi)
+        NetworkInfo[] redes = connec.getAllNetworkInfo();
+
+        for (int i = 0; i < redes.length; i++) {
+            // Si alguna red tiene conexión, se devuelve true
+            if (redes[i].getState() == NetworkInfo.State.CONNECTED) {
+                connected = true;
+            }
+        }
+        return connected;
     }
 }
 
