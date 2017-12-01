@@ -65,5 +65,20 @@
     <string name="fotoP">Reviews</string>
     <string name="jobsActiveConfig">Reviews</string>
     <string name="jobsRequestsConfig">Reviews</string>
+    <string name="buttonLogOut">Log Out</string>
+
+    <string name="titleNewJob">Titulo del problema</string>
+    <string name="descriptionNewJob">Descripcion del problema</string>
+    <string name="timeNewJob">Tiempo para completarlo</string>
+    <string name="moneyNewJob">Dinero a ofrecer por el trabajo</string>
+    <string name="infoNewJob">Informacion adicional</string>
+    <string name="btnNewJob">Agregar oferta</string>
+    <string name="titleProblem">Television Rota</string>
+    <string name="correoProblema">javogx@hotmail.com</string>
+    <string name="tiempoProblema">El tiempo limite es el mes de Septiembre, de lunes a viernes, entre las 3pm-7pm</string>
+    <string name="dineroProblema">Se pagara entre 3000-5000</string>
+    <string name="infoAddProblema">No cuento con herramientas, por lo que se pedira traer las propias</string>
+    <string name="newJobTitle">Television Rota</string>
+    <string name="descripcionProbllema">La television no enciende desde que le derrame refesco encima, saca chispas a veces y un poco de humo</string>
 
 </resources>

@@ -18,14 +18,12 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="400dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
                 android:contentDescription="@string/imageP"
                 android:scaleType="centerCrop"
                 android:src="@drawable/blue" />
-
-            <android.support.v7.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,16 +32,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:orientation="vertical"
-                android:padding="16dp">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabLogOut"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    app:backgroundTint="@android:color/holo_red_light"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_lock_power_off" />
+                android:padding="16dp"
+                android:id="@+id/linearLayout">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circleImageView"
@@ -75,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="147dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
@@ -84,7 +74,30 @@
                     android:textStyle="bold"
                     tools:ignore="RtlHardcoded" />
 
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabConfigPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginStart="17dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:backgroundTint="@color/colorTry1"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_menu_save" />
+
             </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginStart="17dp"
+                android:clickable="true"
+                app:backgroundTint="@android:color/holo_red_light"
+                app:fabSize="mini"
+                app:srcCompat="@android:drawable/ic_lock_power_off" />
 
         </RelativeLayout>
 

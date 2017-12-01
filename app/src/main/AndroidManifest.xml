@@ -35,13 +35,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ConfigurarPerfil" />
-        <activity android:name=".Perfil" />
+
         <activity
             android:name=".OfertasTrabajos"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-
+        <activity android:name=".AddJobs"></activity>
     </application>
 
 </manifest>

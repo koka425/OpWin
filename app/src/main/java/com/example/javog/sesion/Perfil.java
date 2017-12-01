@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -68,14 +67,26 @@ public class Perfil extends Fragment {
     public void onViewCreated(View view,
                               Bundle savedInstanceState){
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabLogOut);
+        FloatingActionButton fab2 = (FloatingActionButton) view.findViewById(R.id.fabConfigPerfil);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Out", Toast.LENGTH_SHORT).show();
                 AskOption(view).show();
             }
         });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Lets change your profile", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ConfigurarPerfil.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     private AlertDialog AskOption(final View view)
     {
