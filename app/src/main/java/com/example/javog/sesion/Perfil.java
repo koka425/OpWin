@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -65,6 +66,15 @@ public class Perfil extends Fragment {
     @Override
     public void onViewCreated(View view,
                               Bundle savedInstanceState){
+        SharedPreferences config = getActivity().getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, Context.MODE_PRIVATE);
+
+        TextView tvNombre = (TextView) view.findViewById(R.id.nombrePerfil);
+        tvNombre.setText(config.getString(LoginActivity.LOGIN_NAME, null));
+        TextView tvPhone = (TextView) view.findViewById(R.id.tvtelefono);
+        tvPhone.setText(config.getString(LoginActivity.LOGIN_PHONE, null));
+        TextView tvEmail = (TextView) view.findViewById(R.id.tvCorreo);
+        tvEmail.setText(config.getString(LoginActivity.LOGIN_EMAIL, null));
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabLogOut);
         FloatingActionButton fab2 = (FloatingActionButton) view.findViewById(R.id.fabConfigPerfil);
         fab.setOnClickListener(new View.OnClickListener() {
