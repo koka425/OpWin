@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Lets change your profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Nueva Oferta de Trabajo", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MainActivity.this, ConfigurarPerfil.class);
+                Intent intent = new Intent(MainActivity.this, AddJobs.class);
                 startActivity(intent);
             }
         });
