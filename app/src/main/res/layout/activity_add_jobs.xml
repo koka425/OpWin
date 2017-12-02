@@ -11,11 +11,9 @@
         android:id="@+id/newJobTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/titleNewJob"
+        android:inputType="textPersonName"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_editor_absoluteY="-5dp" />
 
@@ -63,29 +61,44 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ubicacion"
-        android:textSize="20sp"
-        android:textAlignment="textEnd"
-        android:gravity="end"/>
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/ubicacion"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
         android:weightSum="1">
+
         <Button
             android:id="@+id/bMiLoc"
-            android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="Usar mi Ubicación"
-            android:layout_weight="0.52" />
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="0.45"
+            android:background="@color/colorPrimary"
+            android:text="@string/usarUbicacion" />
 
         <Button
             android:id="@+id/bPlace"
-            android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="Escoger un Lugar"
-            android:layout_weight="0.45" />
+            android:layout_marginEnd="0dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="35dp"
+            android:layout_weight="0.45"
+            android:background="@color/colorPrimary"
+            android:text="@string/choosePlace" />
     </LinearLayout>
 
     <Button
@@ -103,16 +116,16 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <Button
-        android:id="@+id/btnCancelarChange"
+        android:id="@+id/btnCancelarJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorTry1"
         android:text="@string/buttonC"
         android:textColor="@color/cardview_light_background"
         android:textSize="18sp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
 </LinearLayout>

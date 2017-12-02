@@ -18,52 +18,113 @@
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="0dp"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp">
+
+            <TextView
+                android:id="@+id/viewJobTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTry1"
+                android:text="@string/viewJobTitle"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/newJobTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/titleProblem"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="240dp" />
 
             <TextView
+                android:id="@+id/viewJobDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorTry1"
+                android:text="@string/viewJobDescription"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
+
+            <TextView
                 android:id="@+id/newJobDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/descripcionProbllema"
+                android:textAlignment="textStart"
+                android:gravity="start"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="269dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorTry1"
+                android:text="@string/viewJobMoney"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/newJobMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/dineroProblema"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="196dp" />
 
             <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorTry1"
+                android:text="@string/viewJobTime"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
+
+            <TextView
                 android:id="@+id/newJobTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tiempoProblema"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="196dp" />
 
             <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorTry1"
+                android:text="@string/viewAdditionalInfo"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
+
+            <TextView
                 android:id="@+id/newJobAditionalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/infoAddProblema"
                 tools:layout_editor_absoluteX="8dp"

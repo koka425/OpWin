@@ -6,140 +6,132 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context="com.example.javog.sesion.ConfigurarPerfil">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editNombreConfigurar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:hint="@string/nameR"
+            android:inputType="textPersonName"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="-5dp" />
+
+        <EditText
+            android:id="@+id/editCorreoConfigurar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/mailR"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+        <EditText
+            android:id="@+id/editContraConfigurar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/contraR"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="96dp" />
+
+        <EditText
+            android:id="@+id/editTelefonoConfigurar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/telefonoP"
+            android:inputType="number"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="139dp" />
+
+        <EditText
+            android:id="@+id/editDescripcionConfigurar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/descripcionP"
+            android:inputType="textMultiLine"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="139dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/editNombreConfigurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/nameR"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="-5dp" />
-
-            <EditText
-                android:id="@+id/editCorreoConfigurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:hint="@string/mailR"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="45dp" />
-
-            <EditText
-                android:id="@+id/editContraConfigurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:hint="@string/contraR"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="96dp" />
-
-            <EditText
-                android:id="@+id/editTelefonoConfigurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/telefonoP"
-                android:inputType="number"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="139dp" />
-
-            <EditText
-                android:id="@+id/editDescripcionConfigurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/descripcionP"
-                android:inputType="textMultiLine"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="139dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnTomarFoto"
-                    style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimary"
-                    android:hint="@string/buttonTF"
-                    android:text="@string/buttonTF"
-                    android:textColor="@color/cardview_light_background"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/btnGaleria"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="169dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="0.09"
-                    android:background="@color/colorPrimary"
-                    android:hint="@string/buttonG"
-                    android:text="@string/buttonG"
-                    android:textColor="@color/cardview_light_background"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnModify"
-                android:layout_width="match_parent"
+                android:id="@+id/btnTomarFoto"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/colorTry1"
-                android:text="Actualizar"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:hint="@string/buttonTF"
+                android:text="@string/buttonTF"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnCancelarChange"
-                android:layout_width="match_parent"
+                android:id="@+id/btnGaleria"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="169dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:background="@color/colorTry1"
-                android:text="@string/buttonC"
+                android:layout_weight="0.09"
+                android:background="@color/colorPrimary"
+                android:hint="@string/buttonG"
+                android:text="@string/buttonG"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvUrl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Url:" />
-
-            <ImageView
-                android:id="@+id/ivFoto"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerInside" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <Button
+            android:id="@+id/btnModify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTry1"
+            android:text="@string/actualizar"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnCancelarChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTry1"
+            android:text="@string/buttonC"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/url" />
+
+        <ImageView
+            android:id="@+id/ivFoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/place"
+            android:scaleType="centerInside" />
+
+
 
 
 </LinearLayout>

@@ -80,5 +80,16 @@
     <string name="infoAddProblema">No cuento con herramientas, por lo que se pedira traer las propias</string>
     <string name="newJobTitle">Television Rota</string>
     <string name="descripcionProbllema">La television no enciende desde que le derrame refesco encima, saca chispas a veces y un poco de humo</string>
+    <string name="usarUbicacion">Usar mi Ubicación</string>
+    <string name="choosePlace">Escoger un Lugar</string>
+    <string name="ubicacion">Ubicacion</string>
+    <string name="url">Url:</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="place">Place</string>
+    <string name="viewJobTitle">Titulo del Trabajo:</string>
+    <string name="viewJobDescription">Descripcion:</string>
+    <string name="viewJobMoney">Paga:</string>
+    <string name="viewJobTime">Tiempo Destinado:</string>
+    <string name="viewAdditionalInfo">Informacion Adicional:</string>
 
 </resources>

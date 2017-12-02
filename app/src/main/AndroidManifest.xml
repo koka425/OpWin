@@ -50,7 +50,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name=".ConfigurarPerfil"/>
-        <activity android:name=".Perfil" />
         <activity
             android:name=".OfertasTrabajos"
             android:theme="@style/AppTheme.NoActionBar" />
