@@ -59,6 +59,35 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="139dp" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ubicacion"
+        android:textSize="20sp"
+        android:textAlignment="textEnd"
+        android:gravity="end"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/bMiLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Usar mi Ubicación"
+            android:layout_weight="0.52" />
+
+        <Button
+            android:id="@+id/bPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Escoger un Lugar"
+            android:layout_weight="0.45" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnNewJob"
         android:layout_width="match_parent"
