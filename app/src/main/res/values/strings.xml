@@ -91,5 +91,6 @@
     <string name="viewJobMoney">Paga:</string>
     <string name="viewJobTime">Tiempo Destinado:</string>
     <string name="viewAdditionalInfo">Informacion Adicional:</string>
+    <string name="recordarme">Recordarme</string>
 
 </resources>
