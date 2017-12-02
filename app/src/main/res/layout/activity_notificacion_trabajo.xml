@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="com.example.javog.sesion.Datos.NotificacionTrabajo">
+tools:context="com.example.javog.sesion.NotificacionTrabajo">
 
 <android.support.design.widget.AppBarLayout
     android:id="@+id/app_bar"
@@ -47,7 +47,7 @@ tools:context="com.example.javog.sesion.Datos.NotificacionTrabajo">
         app:fabSize="mini"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="top|right"
-        app:srcCompat="@drawable/ic_share_white_24dp" />
+        app:srcCompat="@drawable/ic_share_white_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

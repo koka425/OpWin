@@ -1,11 +1,13 @@
 package com.example.javog.sesion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +16,24 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Datos.Job;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 
 public class Servicios extends Fragment implements SearchView.OnQueryTextListener {
+    private MobileServiceClient mClient;
+    private MobileServiceTable<Job> tabla;
+    private ArrayList<Job> items;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private ListView list;
     private ListViewAdapter adapter;
     private SearchView editsearch;
-    private String[] moviewList;
-    public static ArrayList<MovieNames> movieNamesArrayList = new ArrayList<MovieNames>();
+    public static ArrayList<Job> trabajosArrayList = new ArrayList<Job>();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -62,37 +71,37 @@ public class Servicios extends Fragment implements SearchView.OnQueryTextListene
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        moviewList = new String[]{"Xmen", "Titanic", "Captain America",
+
+
+        /*moviewList = new String[]{"Xmen", "Titanic", "Captain America",
                 "Iron man", "Rocky", "Transporter", "Lord of the rings", "The jungle book",
                 "Tarzan","Cars","Shreck"};
 
-        movieNamesArrayList = new ArrayList<>();
+        trabajosArrayList = new ArrayList<>();
 
         for (int i = 0; i < moviewList.length; i++) {
             MovieNames movieNames = new MovieNames(moviewList[i]);
             // Binds all strings into an array
-            movieNamesArrayList.add(movieNames);
-        }
+            trabajosArrayList.add(movieNames);
+        }*/
+
+        trabajosArrayList = new ArrayList<>();
+        /*trabajosArrayList.add(new Job("Notificacion 1","Television Rota", "", 0, "", "", "", 0, 0, false, false));
+        trabajosArrayList.add(new Job("Holala","Focos Rotos", "", 0, "", "", "", 0, 0, false, false));
+        trabajosArrayList.add(new Job("Trabajo Urgente","Computadora Descompuesta", "", 0, "", "", "", 0, 0, false, false));
+        trabajosArrayList.add(new Job("Notificacion 2","Baño tapado", "", 0, "", "", "", 0, 0, false, false));
+        */
+        items = new ArrayList<Job>();
+        initAzureClient();
 
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        list = (ListView) view.findViewById(R.id.listview);
-        adapter = new ListViewAdapter(getContext());
-
-
-        // Binds the Adapter to the ListView
-        list.setAdapter(adapter);
         editsearch = (SearchView) view.findViewById(R.id.search);
-        editsearch.setOnQueryTextListener(this);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), movieNamesArrayList.get(position).getAnimalName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        list = (ListView) view.findViewById(R.id.listview);
 
+        obtenerItemsWhere(view);
     }
 
     @Override
@@ -100,8 +109,66 @@ public class Servicios extends Fragment implements SearchView.OnQueryTextListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_servicios, container, false);
+
+
     }
 
+    private void initAzureClient(){
+        try{
+            mClient = new MobileServiceClient("https://aadsdewf.azurewebsites.net", getContext());
+            Log.d("initAzureClient",  "cliente de Azure inicializado");
+        }catch (MalformedURLException mue){
+            Log.d("initClientAzure", mue.getMessage());
+        }
+        tabla = mClient.getTable(Job.class);
+    }
+
+    private void obtenerItemsWhere(final View view) {
+        SharedPreferences config = getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, Context.MODE_PRIVATE);
+        final String id = config.getString(LoginActivity.LOGIN_ID, null);
+        new AsyncTask<Void, Void, Void>(){
+            private ArrayList<Job> res = null;
+            @Override
+            protected Void doInBackground(Void... voids){
+                try {
+                    items.clear();
+                    trabajosArrayList.clear();
+                    //encontrado = false;
+                    res  = tabla
+                            .where()
+                            .field("userID")
+                            .ne(id)
+                            .and()
+                            .field("aceptado")
+                            .eq(false)
+                            .execute()
+                            .get();
+
+                    for (Job item : res) {
+                        //encontrado=true;
+                        trabajosArrayList.add(item);
+                        //Log.d("Entro", "Aqui");
+                    }
+                } catch (Exception e) {
+                    Log.d("george", e.getMessage());
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ordenar();
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                initializeAdapter(trabajosArrayList);
+            }
+        }.execute();
+    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -117,5 +184,23 @@ public class Servicios extends Fragment implements SearchView.OnQueryTextListene
         return false;
     }
 
+    private void initializeAdapter(ArrayList<Job> resultado){
+        //resultado.add(new Job("Notificacion 1","Television Rota", "", 0, "", "", "", 0, 0, false, false));
+        adapter = new ListViewAdapter(getContext(), resultado);
+        //Log.d("Size", String.valueOf(resultado.size()));
 
+
+        // Binds the Adapter to the ListView
+        list.setAdapter(adapter);
+        editsearch.setOnQueryTextListener(this);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String jobID = trabajosArrayList.get(position).getId();
+                Intent act = new Intent(getContext(), OfertasTrabajos.class);
+                act.putExtra("jobID",jobID);
+                startActivity(act);
+            }
+        });
+    }
 }

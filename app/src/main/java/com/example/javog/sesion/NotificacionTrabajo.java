@@ -3,12 +3,12 @@ package com.example.javog.sesion;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,15 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.javog.sesion.Datos.Job;
+import com.example.javog.sesion.R;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-public class TerminarTrabajo extends AppCompatActivity {
+public class NotificacionTrabajo extends AppCompatActivity {
 
     private MobileServiceClient mClient;
     private MobileServiceTable<Job> tabla;
@@ -40,13 +40,15 @@ public class TerminarTrabajo extends AppCompatActivity {
     private double latitud;
     private double longitud;
     private String idJob;
-    private String url;
     private ImageView imageView;
+
+    private ShareActionProvider shareActionProvider;
+    private String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_terminar_trabajo);
+        setContentView(R.layout.activity_notificacion_trabajo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -69,46 +71,19 @@ public class TerminarTrabajo extends AppCompatActivity {
         initAzureClient();
         obtenerItemsWhere();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabFinish);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabShare);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TerminarTrabajo.this);
-                builder.setMessage("¿Desea terminar el trabajo?").setCancelable(false);
-                builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        actualizarItem();
-                        Toast.makeText(TerminarTrabajo.this, "Trabajo Terminado", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Toast.makeText(OfertasTrabajos.this, "awwwwwwwww", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.setTitle("Confirm");
-                dialog.show();
-
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        String shareBody = "-" + tvTittle.getText().toString() + "\n\n" + tvDescription.getText().toString() + "\n\n" + url;
+                        String shareSub = "OpWin - Trabajos Rapidos";
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent, "Compartir Usando"));
             }
         });
-
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabShare);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "-" + tvTittle.getText().toString() + "\n\n" + tvDescription.getText().toString() + "\n\n" + url;
-                String shareSub = "OpWin - Trabajos Rapidos";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Compartir Usando"));
-            }
-        });
-
     }
 
     private void initAzureClient(){
@@ -161,57 +136,6 @@ public class TerminarTrabajo extends AppCompatActivity {
         }.execute();
     }
 
-    public void actualizarItem(){
-        new AsyncTask<Void, Void, Void>(){
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
-                    String id = config.getString(LoginActivity.LOGIN_ID, null);
-
-                    items.get(0).setTerminado(true);
-                    tabla.update(items.get(0)).get();
-                    status = true;
-
-                } catch (InterruptedException e) {
-                    status = false;
-                    e.printStackTrace();
-                    Log.d("george", e.getMessage());
-                } catch (ExecutionException e) {
-                    status = false;
-                    e.printStackTrace();
-                    Log.d("george", e.getMessage());
-                } catch (Exception e) {
-                    status = false;
-                    e.printStackTrace();
-                    Log.d("george", e.getMessage());
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //adapter.notifyItemRemoved(i); adapter.notifyItemRangeChanged(i, items.size());
-                    }
-                });
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                ImprimirStatus(status);
-            }
-        }.execute();
-    }
-
-    private void ImprimirStatus(boolean correcto){
-        if (correcto){
-            Toast.makeText(TerminarTrabajo.this, "Trabajo Terminado", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(TerminarTrabajo.this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(TerminarTrabajo.this, "No se pudo terminar el trabajo", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void cargarCampos(ArrayList<Job> result){
         tvTittle.setText(result.get(0).getTittle());
         tvDescription.setText(result.get(0).getDescription());
@@ -240,5 +164,4 @@ public class TerminarTrabajo extends AppCompatActivity {
             }
         });
     }
-
 }

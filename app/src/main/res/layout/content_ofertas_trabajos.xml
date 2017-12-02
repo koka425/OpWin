@@ -31,7 +31,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/newJobTitle"
+                android:id="@+id/tvJobTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -52,15 +52,15 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/newJobDescription"
+                android:id="@+id/tvJobDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
+                android:gravity="start"
                 android:text="@string/descripcionProbllema"
                 android:textAlignment="textStart"
-                android:gravity="start"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="269dp" />
 
@@ -75,7 +75,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/newJobMoney"
+                android:id="@+id/tvJobMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -97,7 +97,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/newJobTime"
+                android:id="@+id/tvJobTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -119,7 +119,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/newJobAditionalInfo"
+                android:id="@+id/tvJobAditionalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

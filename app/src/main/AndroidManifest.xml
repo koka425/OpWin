@@ -61,8 +61,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD0RrL37QfrS-WsgC3GBlo-dxiQxRbE12o" />
 
-        <activity android:name=".TerminarTrabajo" />
-        <activity android:name=".Datos.NotificacionTrabajo"></activity>
+        <activity android:name=".TerminarTrabajo"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".NotificacionTrabajo"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
