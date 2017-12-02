@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Datos.Job;
+
 import java.util.ArrayList;
 
 /**
@@ -20,13 +22,13 @@ public class cardDemoActivity extends AppCompatActivity{
 
     private RecyclerViewClickListener listener;
     private RecyclerView rv;
-    private ArrayList<Notificacion> notificaciones;
+    private ArrayList<Job> notificaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        notificaciones = new ArrayList<Notificacion>();
+        notificaciones = new ArrayList<Job>();
 
         rv=(RecyclerView)findViewById(R.id.recycler_view);
         LinearLayoutManager llm = new LinearLayoutManager(this);

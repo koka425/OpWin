@@ -129,6 +129,13 @@
                 android:text="@string/infoAddProblema"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="196dp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/com_facebook_close" />
         </LinearLayout>
 
 
