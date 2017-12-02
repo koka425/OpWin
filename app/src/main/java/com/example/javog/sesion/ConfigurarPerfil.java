@@ -43,6 +43,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import static com.example.javog.sesion.LoginActivity.LOGIN_DESCRIPTION;
+import static com.example.javog.sesion.LoginActivity.LOGIN_NAME;
+import static com.example.javog.sesion.LoginActivity.LOGIN_PHONE;
+
 public class ConfigurarPerfil extends AppCompatActivity {
     private EditText etNombre, etCorreo, etCel, etDes, etPass, etPass2;
     private MobileServiceClient mClient;
@@ -73,15 +77,15 @@ public class ConfigurarPerfil extends AppCompatActivity {
         settings = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
 
         etNombre = (EditText) findViewById(R.id.editNombreConfigurar);
-        etNombre.setText(settings.getString(LoginActivity.LOGIN_NAME, null));
+        etNombre.setText(settings.getString(LOGIN_NAME, null));
         etCorreo = (EditText) findViewById(R.id.editCorreoConfigurar);
         etCorreo.setText(settings.getString(LoginActivity.LOGIN_EMAIL, null));
         etPass   = (EditText) findViewById(R.id.editContraConfigurar);
         etPass.setText(settings.getString(LoginActivity.LOGIN_PASSWORD, null));
         etCel    = (EditText)findViewById(R.id.editTelefonoConfigurar);
-        etCel.setText(settings.getString(LoginActivity.LOGIN_PHONE, null));
+        etCel.setText(settings.getString(LOGIN_PHONE, null));
         etDes    = (EditText)findViewById(R.id.editDescripcionConfigurar);
-        etDes.setText(settings.getString(LoginActivity.LOGIN_DESCRIPTION, null));
+        etDes.setText(settings.getString(LOGIN_DESCRIPTION, null));
 
         Button btnTomarFoto = (Button) findViewById(R.id.btnTomarFoto);
         Button btnGaleria = (Button) findViewById(R.id.btnGaleria);
@@ -108,7 +112,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
                     } else {
                         int c = Integer.parseInt(cel);
                         String passCrypto = new MessageCrypto().GenerateHash(password, MessageCrypto.HASH_SHA256);
-                        actualizarItem(correo, passCrypto, nombre, desc, c);
+                        actualizarItem(correo, passCrypto, nombre, desc, c, password);
                     }
                 } else {
                     Toast.makeText(ConfigurarPerfil.this, "No hay conexion a Internet", Toast.LENGTH_SHORT).show();
@@ -151,17 +155,25 @@ public class ConfigurarPerfil extends AppCompatActivity {
         tabla = mClient.getTable(User.class);
     }
 
-    public void actualizarItem(String email, String password, String name, String description, int phone){
-        final User item = new User(email, password, name, description, phone);
+    public void actualizarItem(final String email, final String passCript, final String name, final String description, final int phone, final String password){
+        final User item = new User(email, passCript, name, description, phone);
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
                     SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
                     String id = config.getString(LoginActivity.LOGIN_ID, null);
+
                     item.setId(id);
                     tabla.update(item).get();
                     status = true;
+                    SharedPreferences.Editor editor = config.edit();
+                    editor.putString(LoginActivity.LOGIN_EMAIL, email);
+                    editor.putString(LoginActivity.LOGIN_PASSWORD, password);
+                    editor.putString(LoginActivity.LOGIN_NAME, name);
+                    editor.putString(LoginActivity.LOGIN_DESCRIPTION, description);
+                    editor.putString(LoginActivity.LOGIN_PHONE, String.valueOf(phone));
+                    editor.commit();
                 } catch (InterruptedException e) {
                     status = false;
                     e.printStackTrace();
