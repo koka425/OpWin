@@ -54,6 +54,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
     private SharedPreferences settings;
     boolean status = false;
     private ImageView ivFoto;
+    private File image;
     private TextView tvUrl;
 
     private static final int SELECT_PHOTO = 100;
@@ -302,6 +303,11 @@ public class ConfigurarPerfil extends AppCompatActivity {
                 // TODO 15.- Si obtuvimos la imagen y la guardamos la mostramos
             case REQUEST_CAMERA:
                 if(resultCode == RESULT_OK){
+                    //File image = new File
+                    //BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                    //Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
+                    //bitmap = Bitmap.createBitmap(bitmap);
+                    //ivFoto.setImageBitmap(bitmap);
                     Picasso.with(this).load(tvUrl.getText().toString()).into(ivFoto);
                 }
                 return;

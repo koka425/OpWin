@@ -56,7 +56,7 @@
     <string name="contentDescriptionP">Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño</string>
     <string name="imageP">Image</string>
     <string name="labelJobsActiveP">Jobs Active</string>
-    <string name="labelJobsRequestP">Jobs Request</string>
+    <string name="labelJobsRequestP">Jobs Taken</string>
     <string name="labelReviewsP">Reviews</string>
     <string name="imageoptionItem">imageOption</string>
 

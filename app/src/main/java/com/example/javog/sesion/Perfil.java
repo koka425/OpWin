@@ -4,18 +4,35 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Datos.Job;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 
 public class Perfil extends Fragment {
+    private MobileServiceClient mClient;
+    private MobileServiceTable<Job> tabla;
+    private ArrayList<Job> items1;
+    private ArrayList<Job> items2;
+
+    TextView tvJobsTaken;
+    TextView tvJobsDone;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +71,10 @@ public class Perfil extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        initAzureClient();
+        items1 = new ArrayList<Job>();
+        items2 = new ArrayList<Job>();
     }
 
     @Override
@@ -74,6 +95,14 @@ public class Perfil extends Fragment {
         tvPhone.setText(config.getString(LoginActivity.LOGIN_PHONE, null));
         TextView tvEmail = (TextView) view.findViewById(R.id.tvCorreo);
         tvEmail.setText(config.getString(LoginActivity.LOGIN_EMAIL, null));
+        TextView tvDescription = (TextView) view.findViewById(R.id.tvPerfilDescription);
+        tvDescription.setText(config.getString(LoginActivity.LOGIN_DESCRIPTION, null));
+
+        tvJobsTaken = (TextView) view.findViewById(R.id.jobFinished);
+        tvJobsDone  = (TextView) view.findViewById(R.id.jobActive);
+
+        obtenerActividades();
+        obtenerActividadesTerminadas();
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabLogOut);
         FloatingActionButton fab2 = (FloatingActionButton) view.findViewById(R.id.fabConfigPerfil);
@@ -95,7 +124,112 @@ public class Perfil extends Fragment {
         });
     }
 
+    private void initAzureClient(){
+        try{
+            mClient = new MobileServiceClient("https://aadsdewf.azurewebsites.net", getContext());
+            Log.d("initAzureClient",  "cliente de Azure inicializado");
+        }catch (MalformedURLException mue){
+            Log.d("initClientAzure", mue.getMessage());
+        }
+        tabla = mClient.getTable(Job.class);
+    }
 
+    private void obtenerActividades() {
+        SharedPreferences config = getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, Context.MODE_PRIVATE);
+        final String id = config.getString(LoginActivity.LOGIN_ID, null);
+        new AsyncTask<Void, Void, Void>(){
+            private ArrayList<Job> res = null;
+            @Override
+            protected Void doInBackground(Void... voids){
+                try {
+                    items1.clear();
+                    //encontrado = false;
+                    res  = tabla
+                            .where()
+                            .field("trabajadorID")
+                            .eq(id)
+                            .and()
+                            .field("terminado")
+                            .eq(false)
+                            .execute()
+                            .get();
+
+                    for (Job item : res) {
+                        items1.add(item);
+                    }
+                } catch (Exception e) {
+                    Log.d("george", e.getMessage());
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ordenar();
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                imprimir1(res.size());
+            }
+        }.execute();
+    }
+
+    private void obtenerActividadesTerminadas() {
+        SharedPreferences config = getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, Context.MODE_PRIVATE);
+        final String id = config.getString(LoginActivity.LOGIN_ID, null);
+        new AsyncTask<Void, Void, Void>(){
+            private ArrayList<Job> res = null;
+            @Override
+            protected Void doInBackground(Void... voids){
+                try {
+                    items2.clear();
+                    //encontrado = false;
+                    res  = tabla
+                            .where()
+                            .field("trabajadorID")
+                            .eq(id)
+                            .and()
+                            .field("terminado")
+                            .eq(true)
+                            .execute()
+                            .get();
+
+                    for (Job item : res) {
+                        //encontrado=true;
+                        items2.add(item);
+                    }
+                } catch (Exception e) {
+                    Log.d("george", e.getMessage());
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ordenar();
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                imprimir2(res.size());
+            }
+        }.execute();
+    }
+
+    private void imprimir1(int size){
+        tvJobsTaken.setText(String.valueOf(size));
+    }
+
+    private void imprimir2(int size){
+        tvJobsDone.setText(String.valueOf(size));
+    }
 
     private AlertDialog AskOption(final View view)
     {
