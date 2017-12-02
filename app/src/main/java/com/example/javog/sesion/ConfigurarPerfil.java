@@ -157,7 +157,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_CONS, MODE_PRIVATE);
+                    SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
                     String id = config.getString(LoginActivity.LOGIN_ID, null);
                     item.setId(id);
                     tabla.update(item).get();
