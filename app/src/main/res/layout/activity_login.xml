@@ -65,7 +65,7 @@
                 android:id="@+id/checkBoxSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recordarme" />
+                android:text="@string/recordarme" />
 
             <Button
                 android:id="@+id/btnLog"
