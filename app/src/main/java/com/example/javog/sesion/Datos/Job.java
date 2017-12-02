@@ -12,18 +12,21 @@ public class Job {
     private int money;
     private String addInfo;
     private String userID;
+    private String trabajadorID;
     private double latitud;
     private double longitud;
     private boolean aceptado;
     private boolean terminado;
 
-    public Job(String tittle, String description, String reqTime, int money, String addInfo, String userID, double latitud, double longitud, boolean aceptado, boolean terminado) {
+    public Job(String tittle, String description, String reqTime, int money, String addInfo, String userID, String trabajadorID, double latitud, double longitud, boolean aceptado, boolean terminado) {
+        this.id = "";
         this.tittle = tittle;
         this.description = description;
         this.reqTime = reqTime;
         this.money = money;
         this.addInfo = addInfo;
         this.userID = userID;
+        this.trabajadorID = trabajadorID;
         this.latitud = latitud;
         this.longitud = longitud;
         this.aceptado = aceptado;
@@ -116,5 +119,13 @@ public class Job {
 
     public void setTerminado(boolean terminado) {
         this.terminado = terminado;
+    }
+
+    public String getTrabajadorID() {
+        return trabajadorID;
+    }
+
+    public void setTrabajadorID(String trabajadorID) {
+        this.trabajadorID = trabajadorID;
     }
 }

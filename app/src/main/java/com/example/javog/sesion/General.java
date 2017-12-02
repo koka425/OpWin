@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.example.javog.sesion.Datos.Job;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class General extends Fragment {
 
     private RecyclerViewClickListener listener;
     private RecyclerView rv;
-    private ArrayList<Notificacion> notificaciones;
+    private ArrayList<Job> trabajos;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -56,7 +56,7 @@ public class General extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        notificaciones = new ArrayList<Notificacion>();
+        trabajos = new ArrayList<Job>();
 
     }
 
@@ -79,10 +79,10 @@ public class General extends Fragment {
     }
 
     private void initializeAdapter(){
-        notificaciones = new ArrayList<>();
-        notificaciones.add(new Notificacion("Notificacion 1","Television Rota"));
+        trabajos = new ArrayList<>();
+        trabajos.add(new Job("Notificacion 1","Television Rota", "", 0, "", "", "", 0, 0, false, false));
 
-        RVAdapter adapter = new RVAdapter(notificaciones,this.getContext(), new RecyclerViewClickListener() {
+        RVAdapter adapter = new RVAdapter(trabajos,this.getContext(), new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Intent act = new Intent(getContext(), OfertasTrabajos.class);

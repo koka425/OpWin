@@ -1,8 +1,13 @@
 package com.example.javog.sesion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -11,15 +16,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Datos.Job;
+import com.example.javog.sesion.Datos.User;
+import com.example.javog.sesion.crypto.MessageCrypto;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+
+import java.net.MalformedURLException;
+import java.util.concurrent.ExecutionException;
 
 public class AddJobs extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    private MobileServiceClient mClient;
+    private MobileServiceTable<Job> tabla;
 
     private static final int PLACE_PICKER_REQUEST = 1;
 
@@ -34,16 +50,34 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
 
     private final int REQUEST_LOCATION = 1;
 
+    private EditText etTittle;
+    private EditText etDescription;
+    private EditText etTime;
+    private EditText etMoney;
+    private EditText etInfo;
+
     private Button bLocal;
     private Button bPlace;
+    private Button bAddJob;
+    private Button bCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_jobs);
 
-        bLocal = (Button) findViewById(R.id.bMiLoc);
-        bPlace = (Button) findViewById(R.id.bPlace);
+        etTittle      = (EditText) findViewById(R.id.newJobTitle);
+        etDescription = (EditText) findViewById(R.id.newJobDescription);
+        etTime        = (EditText) findViewById(R.id.newJobTime);
+        etMoney       = (EditText) findViewById(R.id.newJobMoney);
+        etInfo        = (EditText) findViewById(R.id.newJobAditionalInfo);
+
+        bLocal  = (Button) findViewById(R.id.bMiLoc);
+        bPlace  = (Button) findViewById(R.id.bPlace);
+        bAddJob = (Button) findViewById(R.id.btnNewJob);
+        bCancel = (Button) findViewById(R.id.btnCancelarJob);
+
+        initAzureClient();
 
         bLocal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +93,117 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
             }
         });
 
+        bAddJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TestConection(AddJobs.this)) {
+                    String tittle = etTittle.getText().toString();
+                    String description = etDescription.getText().toString();
+                    String time = etTime.getText().toString();
+                    String money = etMoney.getText().toString();
+                    String info = etInfo.getText().toString();
+
+                    if (tittle.equals("") || description.equals("") || time.equals("") || money.equals("")) {
+                        Toast.makeText(AddJobs.this, "Favor de llenar los campos titulo, descripcion, tiempo y dinero", Toast.LENGTH_SHORT).show();
+                    } else if (hasLocation==false){
+                        Toast.makeText(AddJobs.this, "Debe registrar la ubicacion antes de proceder", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int m = Integer.parseInt(money);
+                        nuevoItem(tittle, description, time, m, latitud, longitud);
+                    }
+                } else {
+                    Toast.makeText(AddJobs.this, "No hay conexion a Internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        bCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddJobs.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    private void initAzureClient(){
+        try{
+            mClient = new MobileServiceClient("https://aadsdewf.azurewebsites.net", this);
+            Log.d("initAzureClient",  "cliente de Azure inicializado");
+        }catch (MalformedURLException mue){
+            Log.d("initClientAzure", mue.getMessage());
+        }
+        tabla = mClient.getTable(Job.class);
+    }
+
+    public void nuevoItem(String tittle, String description, String time, int money, double latitud, double longitud){
+        SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
+        String id = config.getString(LoginActivity.LOGIN_ID, null);
+
+        final Job item = new Job(tittle, description, time, money, "", id, "", latitud, longitud, false, false);
+        //System.out.println(item.toString());
+        new AsyncTask<Void, Void, Void>(){
+            boolean resultado = false;
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Job res = null;
+                try{
+                    res = mClient.getTable(Job.class).insert(item).get();
+                    Log.d("nuevoItem", "Nuevo trabajo añadido");
+                    resultado = true;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // run() sirve para ejectuar
+                            // operaciones en la interfaz o elementos gráficos
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Log.d("george", "InterruptedException");
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                ImprimirResultado(resultado);
+            }
+        }.execute();
+    }
+
+    private void ImprimirResultado(boolean correcto){
+        if (correcto==true){
+            Toast.makeText(AddJobs.this, "Trabajo añadido exitosamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AddJobs.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(AddJobs.this, "No se pudo añadir el trabajo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static boolean TestConection(Context context) {
+        boolean connected = false;
+        ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Recupera todas las redes (tanto móviles como wifi)
+        NetworkInfo[] redes = connec.getAllNetworkInfo();
+
+        for (int i = 0; i < redes.length; i++) {
+            // Si alguna red tiene conexión, se devuelve true
+            if (redes[i].getState() == NetworkInfo.State.CONNECTED) {
+                connected = true;
+            }
+        }
+        return connected;
     }
 
     private void ObtenerLocal(){
@@ -107,6 +248,7 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
                 requestPermission();
             }
         }catch (SecurityException se) {
+            Toast.makeText(AddJobs.this, "Necesita activar su ubicacion", Toast.LENGTH_LONG).show();
            se.printStackTrace();
         }
     }

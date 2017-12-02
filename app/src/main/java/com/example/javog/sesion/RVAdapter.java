@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.javog.sesion.Datos.Job;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductViewHolder>
     private Context context;
     private RecyclerViewClickListener listener;
 
-    ArrayList<Notificacion> notificacion;
+    ArrayList<Job> notificacion;
 
-    public RVAdapter(ArrayList<Notificacion> noti, Context context, RecyclerViewClickListener listener){
+    public RVAdapter(ArrayList<Job> noti, Context context, RecyclerViewClickListener listener){
         this.notificacion = noti;
         this.context = context;
         this.listener = listener;
@@ -39,8 +40,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductViewHolder>
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        holder.productName.setText(notificacion.get(position).getTitulo());
-        holder.productPrice.setText(notificacion.get(position).getDescripcion());
+        holder.productName.setText(notificacion.get(position).getTittle());
+        holder.productPrice.setText(notificacion.get(position).getDescription());
     }
 
     @Override
