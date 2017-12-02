@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.javog.sesion.OfertasTrabajos"
     tools:showIn="@layout/activity_ofertas_trabajos">
@@ -13,13 +13,14 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="387dp"
-            android:layout_height="411dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="8dp">
 
             <TextView
                 android:id="@+id/viewJobTitle"
@@ -34,8 +35,8 @@
                 android:id="@+id/tvJobTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/titleProblem"
                 tools:layout_editor_absoluteX="8dp"
@@ -55,8 +56,8 @@
                 android:id="@+id/tvJobDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
                 android:text="@string/descripcionProbllema"
@@ -79,8 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/dineroProblema"
                 tools:layout_editor_absoluteX="8dp"
@@ -101,8 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tiempoProblema"
                 tools:layout_editor_absoluteX="8dp"
@@ -123,18 +124,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/infoAddProblema"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="196dp" />
 
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorTry1"
+                android:text="Mapa (click para abrir)"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
+
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerInside"
                 app:srcCompat="@drawable/com_facebook_close"
                 android:contentDescription="@string/place" />
         </LinearLayout>
