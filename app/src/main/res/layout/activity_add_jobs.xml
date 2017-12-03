@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/moneyNewJob"
-        android:inputType="text"
+        android:inputType="numberDecimal"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="139dp" />
 
