@@ -234,6 +234,9 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
 
         if(location != null){
             updateLocationUI();
+        } else {
+            Log.d("george", "Errrrrooooooorrr");
+            Toast.makeText(AddJobs.this, "Necesita activar su ubicacion", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -248,7 +251,7 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
                 requestPermission();
             }
         }catch (SecurityException se) {
-            Toast.makeText(AddJobs.this, "Necesita activar su ubicacion", Toast.LENGTH_LONG).show();
+
            se.printStackTrace();
         }
     }
