@@ -12,6 +12,7 @@ public class User {
     private String description;
     private int phone;
     private String imageName;
+    private String facebookId;
 
     public User(String email, String password, String name, int phone) {
         this.email = email;
@@ -27,6 +28,16 @@ public class User {
         this.description = description;
         this.phone = phone;
         this.imageName = imageName;
+    }
+
+    public User( String email, String name, String password, String description, int phone, String imageName, String facebookId) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.description = description;
+        this.phone = phone;
+        this.imageName = imageName;
+        this.facebookId = facebookId;
     }
 
     public String getId() {
@@ -103,5 +114,13 @@ public class User {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
     }
 }

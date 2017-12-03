@@ -18,11 +18,28 @@ import android.widget.Toast;
 
 import com.example.javog.sesion.Datos.User;
 import com.example.javog.sesion.crypto.MessageCrypto;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A login screen that offers login via email/password.
@@ -50,6 +67,14 @@ public class LoginActivity extends AppCompatActivity{
     public static final String LOGIN_DESCRIPTION = "OpWin_Description";
     public static final String LOGIN_PHONE = "OpWin_Phone";
     public static final String LOGIN_IMAGE = "OpWin_ImageName";
+    public static final String LOGIN_FACEBOOKID = "OpWin_FacebookId";
+
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+
+    private String FacebookID;
+    private String FBname;
+    private String FBemail;
 
 
 
@@ -113,10 +138,77 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+        //setContentView(R.layout.activity_main);
+
+
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Log.d("onSuccess", AccessToken.getCurrentAccessToken().toString());
+                //Log.d("onSuccess", Profile.getCurrentProfile().toString());
+                obtenerDatos();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(LoginActivity.this, "Usuario cancelo acción.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Toast.makeText(LoginActivity.this, "Error al iniciar sesión con Facebook.", Toast.LENGTH_SHORT).show();
+                exception.printStackTrace();
+            }
+        });
+
         AutoLogin();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void obtenerDatos() {
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        //Toast.makeText(LoginActivity.this, object.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            String facebookId = object.getString("id");
+                            String name = object.getString("name");
+                            String email = object.getString("email");
+                            Log.d("result", object.toString());
+                            LoginManager.getInstance().logOut();
+                            //nuevoItem(email, name, facebookId);
+                            validarFacebook(facebookId, name, email);
+                        } catch (JSONException je){
+                            je.printStackTrace();
+                        }
+                    }
+                }
+        );
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
     private boolean ValidateFields(){
@@ -261,6 +353,134 @@ public class LoginActivity extends AppCompatActivity{
             }
         }
         return connected;
+    }
+
+    private void validarFacebook(String id, String nombre, String email){
+        FacebookID = id;
+        FBname = nombre;
+        FBemail = email;
+        obtenerItemsWhereFace(id);
+    }
+
+    private void obtenerItemsWhereFace(final String fbid) {
+
+        new AsyncTask<Void, Void, Void>(){
+            private String email;
+            private String Pwd;
+            @Override
+            protected Void doInBackground(Void... voids){
+                try {
+                    String id="";
+                    items.clear();
+                    encontrado = false;
+                    ArrayList<User> res  = tabla
+                            .where()
+                            .field("facebookid")
+                            .eq(fbid)
+                            .execute()
+                            .get();
+
+                    for (User item : res) {
+                        encontrado = true;
+                        id = item.getId();
+                        String name = item.getName();
+                        String desc = item.getDecription();
+                        email = item.getEmail();
+                        Pwd = item.getPassword();
+                        int phone = item.getPhone();
+                        String imageName = item.getImageName();
+                        items.add(item);
+                        SalvarSession(id, email, Pwd, name, desc, phone, imageName);
+                    }
+                    if (encontrado==true){
+                        if(bSalvar){
+                            SaveCredentials(email, Pwd);
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    Log.d("george", e.getMessage());
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ordenar();
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if(!encontrado){
+                    //Toast.makeText(LoginActivity.this, "ID no encontrado", Toast.LENGTH_SHORT).show();
+                    nuevoItem(FBemail, FBname, FacebookID);
+                } else {
+                    ImprimirStatus(encontrado);
+                }
+            }
+        }.execute();
+    }
+
+    public void nuevoItem(String email, String name, final String facebookId){
+        String pass = new MessageCrypto().GenerateHash(getRandomString(12), MessageCrypto.HASH_SHA256);
+        final User item = new User(email, name, pass, "¡Creado usando una Cuenta de Facebook!", -1, "fb", facebookId);
+        //System.out.println(item.toString());
+        new AsyncTask<Void, Void, Void>(){
+            boolean created = false;
+            @Override
+            protected Void doInBackground(Void... voids) {
+                User res = null;
+                try{
+                    res = mClient.getTable(User.class).insert(item).get();
+                    created = true;
+                    Log.d("nuevoItem", "Nuevo elemento añadido");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // run() sirve para ejectuar
+                            // operaciones en la interfaz o elementos gráficos
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Log.d("george", "InterruptedException");
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if(created == true){
+                    ImprimirRegistroFB();
+                }
+                //obtenerItemsWhereFace(facebookId);
+            }
+        }.execute();
+
+
+    }
+
+    private void ImprimirRegistroFB(){
+        Toast.makeText(LoginActivity.this, "Cuenta creada exitosamente, por favor toque de nuevo.", Toast.LENGTH_SHORT).show();
+    }
+
+    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+
+    private static String getRandomString(final int sizeOfRandomString)
+    {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
     }
 }
 
