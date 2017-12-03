@@ -183,6 +183,7 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
         if (correcto==true){
             Toast.makeText(AddJobs.this, "Trabajo añadido exitosamente", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddJobs.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(AddJobs.this, "No se pudo añadir el trabajo", Toast.LENGTH_SHORT).show();

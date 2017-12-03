@@ -149,6 +149,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfigurarPerfil.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -238,6 +239,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
         if (correcto){
             Toast.makeText(ConfigurarPerfil.this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ConfigurarPerfil.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(ConfigurarPerfil.this, "No se pudieron actualizar los datos", Toast.LENGTH_SHORT).show();

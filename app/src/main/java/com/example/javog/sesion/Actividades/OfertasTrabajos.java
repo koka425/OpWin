@@ -193,6 +193,7 @@ public class OfertasTrabajos extends AppCompatActivity {
         if (correcto){
             Toast.makeText(OfertasTrabajos.this, "Trabajo Aceptado", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(OfertasTrabajos.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(OfertasTrabajos.this, "No se pudo aceptar el trabajo", Toast.LENGTH_SHORT).show();

@@ -169,6 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (correcto==false){
             nuevoItem(email, password, name, desc, phone);
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             Toast.makeText(RegisterActivity.this, "Cuenta creada exitosamente", Toast.LENGTH_SHORT).show();
         } else {

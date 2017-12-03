@@ -207,6 +207,7 @@ public class TerminarTrabajo extends AppCompatActivity {
         if (correcto){
             Toast.makeText(TerminarTrabajo.this, "Trabajo Terminado", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(TerminarTrabajo.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(TerminarTrabajo.this, "No se pudo terminar el trabajo", Toast.LENGTH_SHORT).show();
