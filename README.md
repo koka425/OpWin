@@ -23,15 +23,17 @@ La intención de la aplicación es poder ayudar a los usuarios a solicitar un tr
 ### **Capturas de la interfaz**
 
 - Pantalla de Login
-![](http://trabajosweb.azurewebsites.net/images/gitmd/img01.png)
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img01s.png)
 - Pantalla de Perfil
-![](http://trabajosweb.azurewebsites.net/images/gitmd/img02.png)
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img02s.png)
 - Pantalla para Modificar Perfil
-![](http://trabajosweb.azurewebsites.net/images/gitmd/img03.png)
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img03s.png)
 - Pantalla para visualizar historial de trabajos aceptados
-![](http://trabajosweb.azurewebsites.net/images/gitmd/img04.png)
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img04s.png)
 - Pantalla para agregar un trabajo
-![](http://trabajosweb.azurewebsites.net/images/gitmd/img05.png)
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img05s.png)
+- Pantalla de detalle de un trabajo
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img06s.png)
 
 -----------
 
