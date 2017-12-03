@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Actividades;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.javog.sesion.Fragmentos.General;
+import com.example.javog.sesion.Fragmentos.Perfil;
+import com.example.javog.sesion.Fragmentos.Servicios;
+import com.example.javog.sesion.Fragmentos.Trabajos;
+import com.example.javog.sesion.R;
 
 public class MainActivity extends AppCompatActivity {
 

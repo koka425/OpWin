@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Listas_Y_Adaptadores;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.javog.sesion.Datos.Job;
-
-import org.w3c.dom.Text;
+import com.example.javog.sesion.R;
+import com.example.javog.sesion.Fragmentos.Servicios;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Actividades;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

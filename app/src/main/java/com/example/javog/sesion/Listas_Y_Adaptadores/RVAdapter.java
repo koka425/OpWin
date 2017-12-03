@@ -1,17 +1,16 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Listas_Y_Adaptadores;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.example.javog.sesion.Datos.Job;
+import com.example.javog.sesion.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Actividades;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -36,10 +35,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.javog.sesion.Datos.User;
+import com.example.javog.sesion.R;
 import com.example.javog.sesion.crypto.MessageCrypto;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,10 +52,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.javog.sesion.LoginActivity.LOGIN_DESCRIPTION;
-import static com.example.javog.sesion.LoginActivity.LOGIN_IMAGE;
-import static com.example.javog.sesion.LoginActivity.LOGIN_NAME;
-import static com.example.javog.sesion.LoginActivity.LOGIN_PHONE;
+import static com.example.javog.sesion.Actividades.LoginActivity.LOGIN_DESCRIPTION;
+import static com.example.javog.sesion.Actividades.LoginActivity.LOGIN_IMAGE;
+import static com.example.javog.sesion.Actividades.LoginActivity.LOGIN_NAME;
+import static com.example.javog.sesion.Actividades.LoginActivity.LOGIN_PHONE;
 
 public class ConfigurarPerfil extends AppCompatActivity {
     private EditText etNombre, etCorreo, etCel, etDes, etPass, etPass2;

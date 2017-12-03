@@ -3,7 +3,7 @@
  *
  *
  */
-package com.example.javog.sesion;
+package com.example.javog.sesion.Datos;
 
 
 public class Foto {

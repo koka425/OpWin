@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Fragmentos;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.javog.sesion.Actividades.LoginActivity;
+import com.example.javog.sesion.Actividades.TerminarTrabajo;
 import com.example.javog.sesion.Datos.Job;
+import com.example.javog.sesion.Listas_Y_Adaptadores.RVAdapter;
+import com.example.javog.sesion.Listas_Y_Adaptadores.RecyclerViewClickListener;
+import com.example.javog.sesion.R;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 

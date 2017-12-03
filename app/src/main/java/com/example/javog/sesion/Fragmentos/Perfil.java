@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Fragmentos;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +16,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.javog.sesion.Actividades.ConfigurarPerfil;
+import com.example.javog.sesion.Actividades.LoginActivity;
 import com.example.javog.sesion.Datos.Job;
+import com.example.javog.sesion.R;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.squareup.picasso.Picasso;
