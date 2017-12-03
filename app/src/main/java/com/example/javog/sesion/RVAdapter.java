@@ -42,6 +42,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductViewHolder>
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         holder.productName.setText(notificacion.get(position).getTittle());
         holder.productPrice.setText(notificacion.get(position).getDescription());
+        if(notificacion.get(position).isAceptado()){
+            holder.imageStatus.setImageResource(R.drawable.clock);
+        }
+        if(notificacion.get(position).isTerminado()){
+            holder.imageStatus.setImageResource(R.drawable.tick);
+        }
     }
 
     @Override
@@ -53,12 +59,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductViewHolder>
         CardView cv;
         TextView productName;
         TextView productPrice;
+        ImageView imageStatus;
 
         ProductViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             productName = (TextView)itemView.findViewById(R.id.person_name);
             productPrice = (TextView)itemView.findViewById(R.id.person_age);
+            imageStatus = (ImageView)itemView.findViewById(R.id.person_photo);
+
         }
     }
 
