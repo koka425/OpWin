@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Actividades.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,10 +51,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Actividades.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Actividades.RegisterActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -66,19 +66,19 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ConfigurarPerfil" />
+        <activity android:name=".Actividades.ConfigurarPerfil" />
         <activity
-            android:name=".OfertasTrabajos"
+            android:name=".Actividades.OfertasTrabajos"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddJobs" />
+        <activity android:name=".Actividades.AddJobs" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD0RrL37QfrS-WsgC3GBlo-dxiQxRbE12o" />
 
-        <activity android:name=".TerminarTrabajo"
+        <activity android:name=".Actividades.TerminarTrabajo"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".NotificacionTrabajo"
+        <activity android:name=".Actividades.NotificacionTrabajo"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

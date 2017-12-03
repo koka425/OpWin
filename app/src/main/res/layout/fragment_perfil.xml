@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_collapseMode="none"
     app:layout_collapseParallaxMultiplier="1.0"
-    tools:context="com.example.javog.sesion.Perfil">
+    tools:context="com.example.javog.sesion.Fragmentos.Perfil">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

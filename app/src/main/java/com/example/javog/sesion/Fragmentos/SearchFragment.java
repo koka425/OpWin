@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Fragmentos;
 
 import android.app.ListFragment;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import com.example.javog.sesion.R;
 
 import java.util.ArrayList;
 import java.util.List;

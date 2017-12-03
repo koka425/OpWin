@@ -1,4 +1,4 @@
-package com.example.javog.sesion;
+package com.example.javog.sesion.Actividades;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.javog.sesion.Datos.Job;
-import com.example.javog.sesion.Datos.User;
-import com.example.javog.sesion.crypto.MessageCrypto;
+import com.example.javog.sesion.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -109,7 +108,7 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
                         Toast.makeText(AddJobs.this, "Debe registrar la ubicacion antes de proceder", Toast.LENGTH_SHORT).show();
                     } else {
                         int m = Integer.parseInt(money);
-                        nuevoItem(tittle, description, time, m, latitud, longitud);
+                        nuevoItem(tittle, description, time, m, info, latitud, longitud);
                     }
                 } else {
                     Toast.makeText(AddJobs.this, "No hay conexion a Internet", Toast.LENGTH_SHORT).show();
@@ -141,11 +140,11 @@ public class AddJobs extends AppCompatActivity implements GoogleApiClient.Connec
         tabla = mClient.getTable(Job.class);
     }
 
-    public void nuevoItem(String tittle, String description, String time, int money, double latitud, double longitud){
+    public void nuevoItem(String tittle, String description, String time, int money, String addInfo, double latitud, double longitud){
         SharedPreferences config = getApplicationContext().getSharedPreferences(LoginActivity.SHARED_PREFS_SESSION, MODE_PRIVATE);
         String id = config.getString(LoginActivity.LOGIN_ID, null);
 
-        final Job item = new Job(tittle, description, time, money, "", id, "", latitud, longitud, false, false);
+        final Job item = new Job(tittle, description, time, money, addInfo, id, "", latitud, longitud, false, false);
         //System.out.println(item.toString());
         new AsyncTask<Void, Void, Void>(){
             boolean resultado = false;

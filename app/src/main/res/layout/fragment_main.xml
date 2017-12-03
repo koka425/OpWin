@@ -6,7 +6,7 @@
     android:paddingLeft="64dp"
     android:paddingRight="64dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.javog.sesion.MainActivity$PlaceholderFragment">
+    tools:context="com.example.javog.sesion.Actividades.MainActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.javog.sesion.OfertasTrabajos"
+    tools:context="com.example.javog.sesion.Actividades.OfertasTrabajos"
     tools:showIn="@layout/activity_ofertas_trabajos">
 
     <android.support.constraint.ConstraintLayout
