@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity{
     public static final String LOGIN_NAME = "OpWin_Name";
     public static final String LOGIN_DESCRIPTION = "OpWin_Description";
     public static final String LOGIN_PHONE = "OpWin_Phone";
+    public static final String LOGIN_IMAGE = "OpWin_ImageName";
 
 
 
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity{
         editor.commit();
     }
 
-    private void SalvarSession(String Id, String email, String password, String name, String desc, int phone){
+    private void SalvarSession(String Id, String email, String password, String name, String desc, int phone, String imageName){
         SharedPreferences settings = getSharedPreferences(SHARED_PREFS_SESSION, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(LOGIN_ID, Id);
@@ -152,6 +153,11 @@ public class LoginActivity extends AppCompatActivity{
         editor.putString(LOGIN_NAME, name);
         editor.putString(LOGIN_DESCRIPTION, desc);
         editor.putString(LOGIN_PHONE, String.valueOf(phone));
+        if (imageName != null) {
+            editor.putString(LOGIN_IMAGE,imageName);
+        } else {
+            editor.putString(LOGIN_IMAGE, "");
+        }
         editor.commit();
     }
 
@@ -201,8 +207,9 @@ public class LoginActivity extends AppCompatActivity{
                         String name = item.getName();
                         String desc = item.getDecription();
                         int phone = item.getPhone();
+                        String imageName = item.getImageName();
                         items.add(item);
-                        SalvarSession(id, email, Pwd, name, desc, phone);
+                        SalvarSession(id, email, Pwd, name, desc, phone, imageName);
                     }
                     if (encontrado==true){
                         if(bSalvar){

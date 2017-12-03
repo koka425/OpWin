@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String description;
     private int phone;
+    private String imageName;
 
     public User(String email, String password, String name, int phone) {
         this.email = email;
@@ -19,12 +20,13 @@ public class User {
         this.phone = phone;
     }
 
-    public User( String email, String password, String name, String description, int phone) {
+    public User( String email, String password, String name, String description, int phone, String imageName) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.description = description;
         this.phone = phone;
+        this.imageName = imageName;
     }
 
     public String getId() {
@@ -85,5 +87,21 @@ public class User {
                 ", decription='" + description + '\'' +
                 ", phone=" + phone +
                 '}';
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

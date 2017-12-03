@@ -19,9 +19,12 @@ import android.widget.Toast;
 import com.example.javog.sesion.Datos.Job;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Perfil extends Fragment {
@@ -30,8 +33,13 @@ public class Perfil extends Fragment {
     private ArrayList<Job> items1;
     private ArrayList<Job> items2;
 
+    private String sitioImagen = "http://trabajosweb.azurewebsites.net/images/";
+
     TextView tvJobsTaken;
     TextView tvJobsDone;
+
+    private String imageName = "";
+    private CircleImageView circleImageView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,12 +105,18 @@ public class Perfil extends Fragment {
         tvEmail.setText(config.getString(LoginActivity.LOGIN_EMAIL, null));
         TextView tvDescription = (TextView) view.findViewById(R.id.tvPerfilDescription);
         tvDescription.setText(config.getString(LoginActivity.LOGIN_DESCRIPTION, null));
+        imageName = config.getString(LoginActivity.LOGIN_IMAGE, "");
+
+        circleImageView = (CircleImageView) view.findViewById(R.id.circleImageView);
+
 
         tvJobsTaken = (TextView) view.findViewById(R.id.jobFinished);
         tvJobsDone  = (TextView) view.findViewById(R.id.jobActive);
 
         obtenerActividades();
         obtenerActividadesTerminadas();
+
+        CargarImagen();
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabLogOut);
         FloatingActionButton fab2 = (FloatingActionButton) view.findViewById(R.id.fabConfigPerfil);
@@ -278,5 +292,11 @@ public class Perfil extends Fragment {
         Intent login = new Intent(getActivity(), LoginActivity.class);
         login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(login);
+    }
+
+    private void CargarImagen(){
+        String url = sitioImagen+imageName+".png";
+        Picasso.with(getContext()).load(url).error(R.drawable.slark_icon).into(circleImageView);
+
     }
 }

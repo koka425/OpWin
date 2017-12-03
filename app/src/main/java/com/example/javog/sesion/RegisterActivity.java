@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void nuevoItem(String email, String password, String name, String description, int phone){
-        final User item = new User(email, password, name, description, phone);
+        final User item = new User(email, password, name, description, phone, "");
         //System.out.println(item.toString());
         new AsyncTask<Void, Void, Void>(){
             @Override

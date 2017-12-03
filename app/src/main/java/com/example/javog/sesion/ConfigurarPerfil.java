@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +29,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.javog.sesion.Datos.User;
 import com.example.javog.sesion.crypto.MessageCrypto;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,9 +49,12 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static com.example.javog.sesion.LoginActivity.LOGIN_DESCRIPTION;
+import static com.example.javog.sesion.LoginActivity.LOGIN_IMAGE;
 import static com.example.javog.sesion.LoginActivity.LOGIN_NAME;
 import static com.example.javog.sesion.LoginActivity.LOGIN_PHONE;
 
@@ -54,8 +65,19 @@ public class ConfigurarPerfil extends AppCompatActivity {
     private SharedPreferences settings;
     boolean status = false;
     private ImageView ivFoto;
-    private File image;
     private TextView tvUrl;
+
+    private String uploadKey = "javo_el_pollo_loko";
+
+    private RequestQueue requestQueue;
+
+    private String imageName;
+
+    private File imagePath;
+
+    private Bitmap upImage;
+
+    private boolean imageChanged = false;
 
     private static final int SELECT_PHOTO = 100;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -87,6 +109,9 @@ public class ConfigurarPerfil extends AppCompatActivity {
         etCel.setText(settings.getString(LOGIN_PHONE, null));
         etDes    = (EditText)findViewById(R.id.editDescripcionConfigurar);
         etDes.setText(settings.getString(LOGIN_DESCRIPTION, null));
+        imageName = settings.getString(LOGIN_IMAGE, "");
+
+        requestQueue = Volley.newRequestQueue(this);
 
         Button btnTomarFoto = (Button) findViewById(R.id.btnTomarFoto);
         Button btnGaleria = (Button) findViewById(R.id.btnGaleria);
@@ -157,7 +182,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
     }
 
     public void actualizarItem(final String email, final String passCript, final String name, final String description, final int phone, final String password){
-        final User item = new User(email, passCript, name, description, phone);
+        final User item = new User(email, passCript, name, description, phone, imageName);
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
@@ -174,6 +199,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
                     editor.putString(LoginActivity.LOGIN_NAME, name);
                     editor.putString(LoginActivity.LOGIN_DESCRIPTION, description);
                     editor.putString(LoginActivity.LOGIN_PHONE, String.valueOf(phone));
+                    editor.putString(LoginActivity.LOGIN_IMAGE, imageName);
                     editor.commit();
                 } catch (InterruptedException e) {
                     status = false;
@@ -199,7 +225,12 @@ public class ConfigurarPerfil extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                ImprimirStatus(status);
+                //ImprimirStatus(status);
+                if(imageChanged){
+                    UploadImage(convert(upImage), imageName, uploadKey);
+                } else {
+                    ImprimirStatus(status);
+                }
             }
         }.execute();
     }
@@ -292,6 +323,11 @@ public class ConfigurarPerfil extends AppCompatActivity {
                         ivFoto.setImageBitmap(imagen);
                         tvUrl.setText(imagenSeleccionada.toString());
 
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                        imageName = "JPEG_" + timeStamp + "_";
+                        imageChanged = true;
+                        upImage = imagen;
+
                     }catch (FileNotFoundException fnte){
                         Toast.makeText(this, fnte.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
@@ -303,12 +339,19 @@ public class ConfigurarPerfil extends AppCompatActivity {
                 // TODO 15.- Si obtuvimos la imagen y la guardamos la mostramos
             case REQUEST_CAMERA:
                 if(resultCode == RESULT_OK){
-                    //File image = new File
+                    //File image = new File(imagePath.getPath());
+                    Toast.makeText(this, imagePath.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                     //BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    //Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
+                    //Bitmap bitmap = BitmapFactory.decodeFile(imagePath.getAbsolutePath(),bmOptions);
+                    Bitmap bitmap = decodeSmallBitmap(imagePath, 640, 640);
                     //bitmap = Bitmap.createBitmap(bitmap);
-                    //ivFoto.setImageBitmap(bitmap);
-                    Picasso.with(this).load(tvUrl.getText().toString()).into(ivFoto);
+                    ivFoto.setImageBitmap(bitmap);
+
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    imageName = "JPEG_" + timeStamp + "_";
+                    imageChanged = true;
+                    upImage = bitmap;
+                    //Picasso.with(this).load(tvUrl.getText().toString()).into(ivFoto);
                 }
                 return;
         }
@@ -368,6 +411,7 @@ public class ConfigurarPerfil extends AppCompatActivity {
             imagesFolder.mkdirs();
         }
         File image = new File(imagesFolder, nombreImagen+".jpg");
+        imagePath = image;
         String urlName = "file://" + image.getAbsolutePath();
         tvUrl.setText(urlName);
         return image;
@@ -383,11 +427,126 @@ public class ConfigurarPerfil extends AppCompatActivity {
                 ".jpg",         /* sufijo */
                 storageDir      /* directorio */
         );
+        imagePath = image;
 
 
         // Obtenemos la URL
         String urlName = "file://" + image.getAbsolutePath();
         tvUrl.setText(urlName);
         return image;
+    }
+
+    // Image Tools
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    private Bitmap decodeSmallBitmap(File file, int reqWidth, int reqHeight){
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+
+    }
+
+    /*protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = (EditText) findViewById(R.id.editText);
+        editText2 = (EditText) findViewById(R.id.editText2);
+        bUpload = (Button) findViewById(R.id.button);
+
+        requestQueue = Volley.newRequestQueue(this);
+
+        bUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap = null;
+                try {
+                    InputStream ims = getAssets().open("doge.jpg");
+
+                    bitmap = BitmapFactory.decodeStream(ims);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                String data = convert(bitmap);
+                UploadImage(data, editText.getText().toString(), editText2.getText().toString());
+            }
+        });
+    }*/
+
+    private void UploadImage(final String data, final String imagename, final String key){
+        String url = "http://trabajosweb.azurewebsites.net/postImg.php";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        ImprimirStatus(status);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        error.printStackTrace();
+                        ImprimirStatus(status);
+                        Toast.makeText(ConfigurarPerfil.this, "La Imagen no se pudo guardar.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("image", data);
+                params.put("imagename", imagename);
+                params.put("key", key);
+
+                return params;
+            }
+        };
+        requestQueue.add(postRequest);
+    }
+
+    private String convert(Bitmap bitmap)
+    {
+        Toast.makeText(this, bitmap.getWidth() + ", " + bitmap.getHeight(), Toast.LENGTH_SHORT).show();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
     }
 }
