@@ -22,9 +22,13 @@ La intención de la aplicación es poder ayudar a los usuarios a solicitar un tr
 
 ### **Capturas de la interfaz**
 
+
+
 -----------
 
 ### **Arquitectura de la Aplicacion**
+
+![](http://trabajosweb.azurewebsites.net/images/gitmd/aa2.png)
 
 -----------
 ### **Integrantes del Proyecto**
