@@ -296,7 +296,7 @@ public class Perfil extends Fragment {
 
     private void CargarImagen(){
         String url = sitioImagen+imageName+".png";
-        Picasso.with(getContext()).load(url).error(R.drawable.slark_icon).into(circleImageView);
+        Picasso.with(getContext()).load(url).error(R.drawable.default_img).into(circleImageView);
 
     }
 }

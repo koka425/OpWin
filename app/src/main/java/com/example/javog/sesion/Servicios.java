@@ -72,25 +72,8 @@ public class Servicios extends Fragment implements SearchView.OnQueryTextListene
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-        /*moviewList = new String[]{"Xmen", "Titanic", "Captain America",
-                "Iron man", "Rocky", "Transporter", "Lord of the rings", "The jungle book",
-                "Tarzan","Cars","Shreck"};
-
         trabajosArrayList = new ArrayList<>();
 
-        for (int i = 0; i < moviewList.length; i++) {
-            MovieNames movieNames = new MovieNames(moviewList[i]);
-            // Binds all strings into an array
-            trabajosArrayList.add(movieNames);
-        }*/
-
-        trabajosArrayList = new ArrayList<>();
-        /*trabajosArrayList.add(new Job("Notificacion 1","Television Rota", "", 0, "", "", "", 0, 0, false, false));
-        trabajosArrayList.add(new Job("Holala","Focos Rotos", "", 0, "", "", "", 0, 0, false, false));
-        trabajosArrayList.add(new Job("Trabajo Urgente","Computadora Descompuesta", "", 0, "", "", "", 0, 0, false, false));
-        trabajosArrayList.add(new Job("Notificacion 2","Baño tapado", "", 0, "", "", "", 0, 0, false, false));
-        */
         items = new ArrayList<Job>();
         initAzureClient();
 

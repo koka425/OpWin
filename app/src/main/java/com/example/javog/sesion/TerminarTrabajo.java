@@ -96,7 +96,7 @@ public class TerminarTrabajo extends AppCompatActivity {
         });
 
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabShare);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);

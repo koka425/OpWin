@@ -40,7 +40,7 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/slark_icon"
+                    android:src="@drawable/default_img"
                     app:civ_border_color="@android:color/white"
                     app:civ_border_width="4dp" />
 
@@ -85,7 +85,7 @@
                     android:clickable="true"
                     app:backgroundTint="@color/colorTry1"
                     app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_menu_save" />
+                    app:srcCompat="@drawable/ic_settings_white_24dp" />
 
             </LinearLayout>
 
@@ -93,12 +93,13 @@
                 android:id="@+id/fabLogOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="17dp"
                 android:layout_marginStart="17dp"
                 android:clickable="true"
                 app:backgroundTint="@android:color/holo_red_light"
                 app:fabSize="mini"
-                app:srcCompat="@android:drawable/ic_lock_power_off" />
+                app:srcCompat="@drawable/ic_power_settings_new_white_24dp" />
 
         </RelativeLayout>
 
