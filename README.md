@@ -12,7 +12,7 @@ La intención de la aplicación es poder ayudar a los usuarios a solicitar un tr
 
 
 > - IDE que soporte compilación de aplicaciones Android (Android Studio, intelliJ)
-> - Version de Android mínima 4.4.1 (API 19)
+> - Version de Android mínima 4.4 (API 19)
 > - Dos llaves de API para poder usar funcionalidades extendidas de la aplicación:
 >	 - Una Llave API para [Google Services][9] con permisos para usar [Place Picker][10].
 >	 - Una Llave API para el SDK de [Facebook][11].
@@ -22,7 +22,16 @@ La intención de la aplicación es poder ayudar a los usuarios a solicitar un tr
 
 ### **Capturas de la interfaz**
 
-
+- Pantalla de Login
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img01.png)
+- Pantalla de Perfil
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img02.png)
+- Pantalla para Modificar Perfil
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img03.png)
+- Pantalla para visualizar historial de trabajos aceptados
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img04.png)
+- Pantalla para agregar un trabajo
+![](http://trabajosweb.azurewebsites.net/images/gitmd/img05.png)
 
 -----------
 
